@@ -7,7 +7,7 @@ import model.SnakesAndLaddersController;
 public class Main {
 
     public Scanner reader;
-    public SnakesAndLaddersController SaL;
+    public SnakesAndLaddersController controller;
 
     public static void main(String[] args) {
 
@@ -19,7 +19,7 @@ public class Main {
 
     public Main() {
         reader = new Scanner(System.in);
-        SaL = new SnakesAndLaddersController();
+        controller = new SnakesAndLaddersController();
     }
 
     /**
@@ -71,6 +71,19 @@ public class Main {
     }
 
     private void play() {
+        System.out.println("Enter the number of rows (horizontally)");
+        int rows = reader.nextInt();
+        System.out.println("Enter the number of columns (vertically)");
+        int columns = reader.nextInt();
+
+        System.out.println("Enter the number of snakes");
+        int snakes = reader.nextInt();
+        System.out.println("Enter the number of ladders");
+        int ladders = reader.nextInt();
+
+        controller.createGameboard(rows, columns);
+
+        System.out.println(controller.printGameboard());
 
     }
 }
