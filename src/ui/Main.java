@@ -60,14 +60,14 @@ public class Main {
                     System.out.println(seeRanking());
                     break;
                 default:
-                    System.out.println("------------------\nValue incorrect!!!");
+                    System.out.println("------------------\nValue incorrect!");
                     break;
             }
         } while (exit == false);
     }
 
     private String seeRanking() {
-        return null;
+        return controller.printRanking();
     }
 
     private void play() {
@@ -81,9 +81,12 @@ public class Main {
         System.out.println("Enter the number of ladders");
         int ladders = reader.nextInt();
 
-        controller.createGameboard(rows, columns);
+        controller.createGameboard(rows, columns, snakes, ladders);
 
-        System.out.println(controller.printGameboard());
+        // System.out.println(controller.printGameboard());
+        // System.out.println(controller.printGameboardInOrder());
+
+        System.out.println(controller.printListo());
 
     }
 }
