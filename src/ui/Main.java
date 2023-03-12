@@ -86,7 +86,7 @@ public class Main {
         // System.out.println(controller.printGameboard());
         // System.out.println(controller.printGameboardInOrder());
 
-        System.out.println(controller.printListo());
+        System.out.println(controller.printGameboard());
 
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class Gameboard {
 
     private int rows;
@@ -9,23 +11,10 @@ public class Gameboard {
     private Box head;
     private Box tail;
 
+    public Random r;
+
     public Gameboard() {
-    }
-
-    public Box getHead() {
-        return head;
-    }
-
-    public void setHead(Box head) {
-        this.head = head;
-    }
-
-    public Box getTail() {
-        return tail;
-    }
-
-    public void setTail(Box tail) {
-        this.tail = tail;
+        r = new Random();
     }
 
     public void addLast(Box node) {
@@ -38,51 +27,64 @@ public class Gameboard {
         }
     }
 
-    public String print() {
-        return print(this.head, "");
+    public void createSnakes() {
+
     }
 
-    private String print(Box current, String msj) {
-        if (this.head == null && this.tail == null) {
-            return "La lista esta vacia";
-        } else if (current == this.tail) {
-            return msj += " " + current.getValue();
+    private void createSnakes(int snake, Box current) {
+        if (snake == 0) {
+            return;
         }
-        msj += " " + current.getValue();
-        return print(current.getNext(), msj);
+        int box1 = r.nextInt(2, this.colums * this.rows);
+        if (searchBox(box1) != null) {
+            if (searchBox(box1).getLadder().equals("")) {
+
+            }
+        }
     }
 
     public String printGameboard() {
-        return printGameboard(rows, colums, colums * rows, "");
+        return "\n" + printGameboard(colums, rows, colums * rows, "", "");
     }
 
-    private String printGameboard(int row, int column, int counter, String msj) {
+    private String printGameboard(int column, int row, int counter, String tmpMsj, String msj) {
+        // Se ejecutara hasta que el counter sea 0
         if (counter == 0) {
-            return msj;
+            return msj + tmpMsj;
         }
+        // Si es par es de una forma
+        if (row % 2 == 0) {
 
-        msj += counter + " ";
-        return printGameboard(row, column, --counter, msj);
+            if (column == 0) {
+                return printGameboard(this.colums, --row, counter, tmpMsj, msj + "\n");
+            } else {
 
-    }
+                msj += "[" + counter + searchBox(counter).getPlayer1().getName()
+                        + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
+                        + "] ";
 
-    private String printInOrderWithValues(Box currentStart, Box end, String msj) {
+            }
+            // Si es impar es de otra forma
+        } else {
 
-        if (currentStart == null && end == null) {
-            return "No se encontraron los nodos, por favor verifique";
+            if (column == 0) {
+                return printGameboard(this.colums, --row, counter, "", msj + tmpMsj + "\n");
+            } else {
+                // Para que la primera casilla no quede con un espacio antes del corchete
+                if (column == 1) {
+                    tmpMsj = "[" + counter + searchBox(counter).getPlayer1().getName()
+                            + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
+                            + "]" + tmpMsj;
+                } else {
+                    tmpMsj = " [" + counter + searchBox(counter).getPlayer1().getName()
+                            + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
+                            + "]" + tmpMsj;
+                }
+
+            }
         }
+        return printGameboard(--column, row, --counter, tmpMsj, msj);
 
-        if (currentStart.getValue() == end.getValue()) {
-            return msj += " " + currentStart.getValue();
-
-        }
-
-        msj += " " + currentStart.getValue();
-        return print(currentStart.getNext(), msj);
-    }
-
-    public String printInOrderWithValues() {
-        return printInOrderWithValues(searchBox(10), searchBox(15), "");
     }
 
     private Box searchBox(int goal, Box current) {
@@ -165,6 +167,34 @@ public class Gameboard {
      */
     public void setLadders(int ladders) {
         this.ladders = ladders;
+    }
+
+    /**
+     * @return Box return the head
+     */
+    public Box getHead() {
+        return head;
+    }
+
+    /**
+     * @param head the head to set
+     */
+    public void setHead(Box head) {
+        this.head = head;
+    }
+
+    /**
+     * @return Box return the tail
+     */
+    public Box getTail() {
+        return tail;
+    }
+
+    /**
+     * @param tail the tail to set
+     */
+    public void setTail(Box tail) {
+        this.tail = tail;
     }
 
 }

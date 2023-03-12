@@ -11,6 +11,7 @@ public class SnakesAndLaddersController {
     }
 
     public void createGameboard(int rows, int columns, int snakes, int ladders) {
+        // Para crear otro tablero, se regeneran nuevamente todos los valores de este
         gameboard.setHead(null);
         gameboard.setTail(null);
         gameboard.setRows(rows);
@@ -18,7 +19,9 @@ public class SnakesAndLaddersController {
         gameboard.setLadders(ladders);
         gameboard.setSnakes(snakes);
         createGameboard(rows, columns, 1);
-
+        gameboard.searchBox(1).setPlayer1(new Player("*"));
+        gameboard.searchBox(1).setPlayer2(new Player("$"));
+        gameboard.searchBox(1).setPlayer3(new Player("%"));
     }
 
     private void createGameboard(int rows, int columns, int counter) {
@@ -34,14 +37,6 @@ public class SnakesAndLaddersController {
     }
 
     public String printGameboard() {
-        return gameboard.print();
-    }
-
-    public String printGameboardInOrder() {
-        return gameboard.printInOrderWithValues();
-    }
-
-    public String printListo() {
         return gameboard.printGameboard();
     }
 
