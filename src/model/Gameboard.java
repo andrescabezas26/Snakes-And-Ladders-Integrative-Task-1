@@ -35,10 +35,11 @@ public class Gameboard {
         if (snake == 0) {
             return;
         }
-        int box1 = r.nextInt(2, this.colums * this.rows);
-        if (searchBox(box1) != null) {
-            if (searchBox(box1).getLadder().equals("")) {
 
+        int box1 = r.nextInt(((rows*colums)-2))+2;
+        if (searchBox(box1) != null) {
+            if (searchBox(box1).getLadder().equals("") && searchBox(box1).getSnake().equals("")) {
+                
             }
         }
     }

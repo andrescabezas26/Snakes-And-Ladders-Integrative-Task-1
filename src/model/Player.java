@@ -5,8 +5,7 @@ public class Player {
     
     private String name;
     private long score;
-    private Player right;
-    private Player left;
+    private Player next;
     
     public Player(String name) {
         this.name = name;
@@ -23,16 +22,10 @@ public class Player {
     public void setScore(long score) {
         this.score = score;
     }
-    public Player getRight() {
-        return right;
+    public Player getNext() {
+        return next;
     }
-    public void setRight(Player right) {
-        this.right = right;
-    }
-    public Player getLeft() {
-        return left;
-    }
-    public void setLeft(Player left) {
-        this.left = left;
+    public void setNext(Player next) {
+        this.next = next;
     }
 }

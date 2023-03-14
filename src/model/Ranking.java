@@ -2,9 +2,9 @@ package model;
 
 public class Ranking {
 
-    private Player root;
+    private Score root;
 
-    public void insertScore(Player score){
+    public void insertScore(Score score){
         if(root==null){
             root=score;
         }else{
@@ -12,9 +12,9 @@ public class Ranking {
         }
     }
 
-    private void insertScore(Player score, Player current){
+    private void insertScore(Score score, Score current){
 		
-		if(score.getScore() < current.getScore()){
+		if(score.getValue() < current.getValue()){
 			if(current.getLeft() == null){
 				current.setLeft(score); 
 			}
@@ -23,7 +23,7 @@ public class Ranking {
 			}
 		}
 		
-		else if(score.getScore() > current.getScore()){
+		else if(score.getValue() > current.getValue()){
 			if(current.getRight() == null){
 				current.setRight(score); 
 			}
@@ -40,11 +40,11 @@ public class Ranking {
 		return "[" + printInDescendingOrder(root) + "]"; 
 	}
 
-	private String printInDescendingOrder(Player current){
+	private String printInDescendingOrder(Score current){
 		if(current == null){
 			return ""; 
 		}
 
-		return printInDescendingOrder(current.getLeft()) + " " + current.getScore() + " " + printInDescendingOrder(current.getRight()); 
+		return printInDescendingOrder(current.getLeft()) + " " + current.getValue() + " " + printInDescendingOrder(current.getRight()); 
 	}
 }
