@@ -4,6 +4,7 @@ public class Box {
 
     private int value;
     private Box next;
+    private Box previous;
     private String snake;
     private String ladder;
     private Player player1;
@@ -104,6 +105,21 @@ public class Box {
      */
     public void setLadder(String ladder) {
         this.ladder = ladder;
+    }
+
+
+    /**
+     * @return Box return the previous
+     */
+    public Box getPrevious() {
+        return previous;
+    }
+
+    /**
+     * @param previous the previous to set
+     */
+    public void setPrevious(Box previous) {
+        this.previous = previous;
     }
 
 }

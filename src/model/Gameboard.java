@@ -15,6 +15,8 @@ public class Gameboard {
 
     public Gameboard() {
         r = new Random();
+        createLadders(ladders);
+        createSnakes(snakes);
     }
 
     public void addLast(Box node) {
@@ -27,21 +29,72 @@ public class Gameboard {
         }
     }
 
-    public void createSnakes() {
-
-    }
-
-    private void createSnakes(int snake, Box current) {
+    private void createSnakes(int snake) {
         if (snake == 0) {
             return;
         }
 
-        int box1 = r.nextInt(((rows*colums)-2))+2;
-        if (searchBox(box1) != null) {
-            if (searchBox(box1).getLadder().equals("") && searchBox(box1).getSnake().equals("")) {
-                
+        int numBox1 = r.nextInt(((rows*colums)/2)-2)+2;
+        Box box1= searchBox(numBox1);
+        numBox1= vefiryLaddersAndSnakes(box1, numBox1);
+        int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
+        Box box2= searchBox(numBox2);
+        box1.setSnake(intToLetter(numBox1));
+        box2.setSnake(intToLetter(numBox2));
+        createSnakes(--snake);
+    }
+
+    private void createLadders(int ladders) {
+        if (ladders == 0) {
+            return;
+        }
+        int numBox1 = r.nextInt(((rows*colums)/2)-2)+2;
+        Box box1= searchBox(numBox1);
+        numBox1 = vefiryLaddersAndSnakes(box1, numBox1);
+        int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
+        Box box2= searchBox(numBox2);
+        box1.setLadder(numBox1+"");
+        box2.setLadder(numBox2+"");
+        createSnakes(--ladders);
+    }
+
+    private int vefiryLaddersAndSnakes(Box box1, int random){
+        if(box1.getLadder().isEmpty() && box1.getSnake().isEmpty()){
+            if(box1.getNext().getSnake().isEmpty() && box1.getNext().getLadder().isEmpty()){
+                if(box1.getPrevious().getSnake().isEmpty() && box1.getPrevious().getLadder().isEmpty()){
+                    return random;
+                }
+                random = r.nextInt(((rows*colums)-2))+2;
+                box1 = searchBox(random);
+                return vefiryLaddersAndSnakes(box1, random);
             }
         }
+
+        random = r.nextInt(((rows*colums)-2))+2;
+        box1 = searchBox(random);
+        return vefiryLaddersAndSnakes(box1, random);
+        
+    }
+
+
+    private int vefirySecondRandomBox(int random, int higher){
+        if(random>higher+colums){
+            Box box= searchBox(random);
+            if(vefiryLaddersAndSnakes(box, random)==random){
+                return random;
+            }else{
+                random = r.nextInt((rows*colums)-2)+2;
+                return vefirySecondRandomBox(random, higher);
+            }
+        }else{
+            random = r.nextInt(((rows*colums)-2))+2;
+            return vefirySecondRandomBox(random, higher);
+        }
+    }
+
+    private String intToLetter(int num){
+        char letter =(char)(64+num);
+        return letter+"";
     }
 
     public String printGameboard() {
