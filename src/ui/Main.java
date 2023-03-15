@@ -88,5 +88,7 @@ public class Main {
 
         System.out.println(controller.printGameboard());
 
+        System.out.println(controller.printSnakeLadder());
+
     }
 }

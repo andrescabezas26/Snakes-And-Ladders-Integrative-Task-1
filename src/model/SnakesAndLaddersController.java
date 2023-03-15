@@ -22,6 +22,8 @@ public class SnakesAndLaddersController {
         gameboard.searchBox(1).setPlayer1(new Player("*"));
         gameboard.searchBox(1).setPlayer2(new Player("$"));
         gameboard.searchBox(1).setPlayer3(new Player("%"));
+        gameboard.createLadders();
+        gameboard.createSnakes();
     }
 
     private void createGameboard(int rows, int columns, int counter) {
@@ -46,5 +48,9 @@ public class SnakesAndLaddersController {
         } else {
             return ranking.printInDescendingOrder();
         }
+    }
+
+    public String printSnakeLadder(){
+        return gameboard.printSnakeLadder();
     }
 }

@@ -14,6 +14,7 @@ public class Box {
     public Box(int value) {
         this.value = value;
         this.next = null;
+        this.previous = null;
         this.snake = "";
         this.ladder = "";
         this.player1 = new Player("");
