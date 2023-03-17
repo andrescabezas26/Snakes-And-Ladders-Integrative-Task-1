@@ -110,6 +110,9 @@ public class Gameboard {
         if (counter == 0) {
             return msj + tmpMsj;
         }
+        // Aqui se guardara el numero de la casilla y los jugadores en ella
+        String players = counter + searchBox(counter).getPlayer1().getName()
+                + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName();
         // Si es par es de una forma
         if (row % 2 == 0) {
 
@@ -117,28 +120,19 @@ public class Gameboard {
                 return printGameboard(this.colums, --row, counter, tmpMsj, msj + "\n");
             } else {
 
-                msj += "[" + counter + searchBox(counter).getPlayer1().getName()
-                        + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
-                        + "] ";
-
+                msj += "[" + players + "] ";
             }
             // Si es impar es de otra forma
         } else {
-
             if (column == 0) {
                 return printGameboard(this.colums, --row, counter, "", msj + tmpMsj + "\n");
             } else {
                 // Para que la primera casilla no quede con un espacio antes del corchete
                 if (column == 1) {
-                    tmpMsj = "[" + counter + searchBox(counter).getPlayer1().getName()
-                            + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
-                            + "]" + tmpMsj;
+                    tmpMsj = "[" + players + "]" + tmpMsj;
                 } else {
-                    tmpMsj = " [" + counter + searchBox(counter).getPlayer1().getName()
-                            + searchBox(counter).getPlayer2().getName() + searchBox(counter).getPlayer3().getName()
-                            + "]" + tmpMsj;
+                    tmpMsj = " [" + players + "]" + tmpMsj;
                 }
-
             }
         }
         return printGameboard(--column, row, --counter, tmpMsj, msj);
@@ -154,6 +148,8 @@ public class Gameboard {
         if (counter == 0) {
             return msj + tmpMsj;
         }
+        Boolean isEmpty = searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty();
+        String SnaAndLad = searchBox(counter).getSnake() + searchBox(counter).getLadder();
         // Si es par es de una forma
         if (row % 2 == 0) {
 
@@ -161,14 +157,12 @@ public class Gameboard {
                 return printSnakeLadder(this.colums, --row, counter, tmpMsj, msj + "\n");
             } else {
 
-                if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
+                if (Boolean.TRUE.equals(isEmpty)) {
                     msj += "[ ] ";
                 } else {
 
-                    msj += "[" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                            + "] ";
+                    msj += "[" + SnaAndLad + "] ";
                 }
-
             }
             // Si es impar es de otra forma
         } else {
@@ -178,23 +172,20 @@ public class Gameboard {
             } else {
                 // Para que la primera casilla no quede con un espacio antes del corchete
                 if (column == 1) {
-                    if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
-                        msj += "[ ]";
+                    if (Boolean.TRUE.equals(isEmpty)) {
+                        tmpMsj = "[ ]" + tmpMsj;
                     } else {
 
-                        tmpMsj = "[" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                                + "]" + tmpMsj;
+                        tmpMsj = "[" + SnaAndLad + "]" + tmpMsj;
                     }
                 } else {
-                    if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
-                        msj += " [ ]";
+                    if (Boolean.TRUE.equals(isEmpty)) {
+                        tmpMsj = " [ ]" + tmpMsj;
                     } else {
 
-                        tmpMsj = " [" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                                + "]" + tmpMsj;
+                        tmpMsj = " [" + SnaAndLad + "]" + tmpMsj;
                     }
                 }
-
             }
         }
         return printSnakeLadder(--column, row, --counter, tmpMsj, msj);

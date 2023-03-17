@@ -136,8 +136,7 @@ public class Main {
 
         controller.createGameboard(rows, columns, snakes, ladders, symbolPlayer1, symbolPlayer2, symbolPlayer3);
 
-        // System.out.println(controller.printGameboard());
-        // System.out.println(controller.printGameboardInOrder());
+        testCase();
 
         System.out.println(controller.printGameboard());
         long startTime = System.currentTimeMillis();
@@ -150,6 +149,14 @@ public class Main {
 
         System.out.println(controller.printSnakeLadder());
 
+    }
+
+    public void testCase() {
+        System.out.println(controller.printGameboard());
+
+        System.out.println(controller.printSnakeLadder());
+
+        reader.nextInt();
     }
 
     /**
