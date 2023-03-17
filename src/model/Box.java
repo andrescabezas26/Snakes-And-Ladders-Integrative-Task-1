@@ -5,8 +5,8 @@ public class Box {
     private int value;
     private Box next;
     private Box previous;
-    private String snake;
-    private String ladder;
+    private Box snakeOrLadder;
+    private String snakeOrLadderValue;
     private Player player1;
     private Player player2;
     private Player player3;
@@ -15,11 +15,18 @@ public class Box {
         this.value = value;
         this.next = null;
         this.previous = null;
-        this.snake = "";
-        this.ladder = "";
+        this.snakeOrLadderValue="";
         this.player1 = new Player("");
         this.player2 = new Player("");
         this.player3 = new Player("");
+    }
+
+    private int verifyIfisLadderOrSnake(){
+        char[] value=snakeOrLadderValue.toCharArray();
+        if(Character.isDigit(value[0])){
+            return 1;
+        }
+        return -1;
     }
 
     public Box getNext() {
@@ -81,35 +88,6 @@ public class Box {
     }
 
     /**
-     * @return String return the snake
-     */
-    public String getSnake() {
-        return snake;
-    }
-
-    /**
-     * @param snake the snake to set
-     */
-    public void setSnake(String snake) {
-        this.snake = snake;
-    }
-
-    /**
-     * @return String return the ladder
-     */
-    public String getLadder() {
-        return ladder;
-    }
-
-    /**
-     * @param ladder the ladder to set
-     */
-    public void setLadder(String ladder) {
-        this.ladder = ladder;
-    }
-
-
-    /**
      * @return Box return the previous
      */
     public Box getPrevious() {
@@ -121,6 +99,34 @@ public class Box {
      */
     public void setPrevious(Box previous) {
         this.previous = previous;
+    }
+
+    /**
+     * @return Box return the snakeOrLadder
+     */
+    public Box getSnakeOrLadder() {
+        return snakeOrLadder;
+    }
+
+    /**
+     * @param snakeOrLadder the snakeOrLadder to set
+     */
+    public void setSnakeOrLadder(Box snakeOrLadder) {
+        this.snakeOrLadder = snakeOrLadder;
+    }
+
+    /**
+     * @return String return the snakeOrLadderValue
+     */
+    public String getSnakeOrLadderValue() {
+        return snakeOrLadderValue;
+    }
+
+    /**
+     * @param snakeOrLadderValue the snakeOrLadderValue to set
+     */
+    public void setSnakeOrLadderValue(String snakeOrLadderValue) {
+        this.snakeOrLadderValue = snakeOrLadderValue;
     }
 
 }

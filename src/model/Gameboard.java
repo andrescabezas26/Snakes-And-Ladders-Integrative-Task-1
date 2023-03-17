@@ -42,11 +42,13 @@ public class Gameboard {
 
         int numBox1 = r.nextInt(((rows * colums) / 2 - 1)) + 2;
         Box box1 = searchBox(numBox1);
-        numBox1 = vefiryLaddersAndSnakes(box1, numBox1, 1);
+        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1, 1);
         int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
 
-        searchBox(numBox1).setSnake(intToLetter(snake));
-        searchBox(numBox2).setSnake(intToLetter(snake));
+        searchBox(numBox1).setSnakeOrLadderValue(intToLetter(snake));
+        searchBox(numBox1).setSnakeOrLadder(searchBox(numBox2));
+        searchBox(numBox2).setSnakeOrLadderValue(intToLetter(snake));
+        searchBox(numBox2).setSnakeOrLadder(searchBox(numBox1));
         snake--;
         createSnakes(snake);
     }
@@ -61,16 +63,18 @@ public class Gameboard {
         }
         int numBox1 = r.nextInt(((rows * colums) / 2 - 1)) + 2;
         Box box1 = searchBox(numBox1);
-        numBox1 = vefiryLaddersAndSnakes(box1, numBox1, 1);
+        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1, 1);
         int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
-        searchBox(numBox1).setLadder(ladder + "");
-        searchBox(numBox2).setLadder(ladder + "");
+        searchBox(numBox1).setSnakeOrLadderValue(ladder + "");
+        searchBox(numBox1).setSnakeOrLadder(searchBox(numBox2));
+        searchBox(numBox2).setSnakeOrLadderValue(ladder + "");
+        searchBox(numBox2).setSnakeOrLadder(searchBox(numBox1));
         ladder--;
         createLadders(ladder);
     }
 
-    private int vefiryLaddersAndSnakes(Box box1, int random, int option) {
-        if (box1.getLadder().isEmpty() && box1.getSnake().isEmpty()) {
+    private int vefiryBoxLaddersAndSnakes(Box box1, int random, int option) {
+        if (box1.getSnakeOrLadder()==null) {
             return random;
         }
         if (option == 1) {
@@ -78,13 +82,13 @@ public class Gameboard {
         }
         random = r.nextInt(((rows * colums) - 2)) + 2;
         box1 = searchBox(random);
-        return vefiryLaddersAndSnakes(box1, random, option);
+        return vefiryBoxLaddersAndSnakes(box1, random, option);
     }
 
     private int vefirySecondRandomBox(int random, int higher) {
         if (random > higher + colums) {
             Box box = searchBox(random);
-            if (vefiryLaddersAndSnakes(box, random, 2) == random) {
+            if (vefiryBoxLaddersAndSnakes(box, random, 2) == random) {
                 return random;
             } else {
                 random = r.nextInt((rows * colums) - 2) + 2;
@@ -142,62 +146,6 @@ public class Gameboard {
             }
         }
         return printGameboard(--column, row, --counter, tmpMsj, msj);
-
-    }
-
-    public String printSnakeLadder() {
-        return "\n" + printSnakeLadder(colums, rows, colums * rows, "", "");
-    }
-
-    private String printSnakeLadder(int column, int row, int counter, String tmpMsj, String msj) {
-        // Se ejecutara hasta que el counter sea 0
-        if (counter == 0) {
-            return msj + tmpMsj;
-        }
-        // Si es par es de una forma
-        if (row % 2 == 0) {
-
-            if (column == 0) {
-                return printSnakeLadder(this.colums, --row, counter, tmpMsj, msj + "\n");
-            } else {
-
-                if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
-                    msj += "[ ] ";
-                } else {
-
-                    msj += "[" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                            + "] ";
-                }
-
-            }
-            // Si es impar es de otra forma
-        } else {
-
-            if (column == 0) {
-                return printSnakeLadder(this.colums, --row, counter, "", msj + tmpMsj + "\n");
-            } else {
-                // Para que la primera casilla no quede con un espacio antes del corchete
-                if (column == 1) {
-                    if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
-                        msj += "[ ]";
-                    } else {
-
-                        tmpMsj = "[" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                                + "]" + tmpMsj;
-                    }
-                } else {
-                    if (searchBox(counter).getSnake().isEmpty() && searchBox(counter).getLadder().isEmpty()) {
-                        msj += " [ ]";
-                    } else {
-
-                        tmpMsj = " [" + searchBox(counter).getSnake() + searchBox(counter).getLadder()
-                                + "]" + tmpMsj;
-                    }
-                }
-
-            }
-        }
-        return printSnakeLadder(--column, row, --counter, tmpMsj, msj);
 
     }
 
