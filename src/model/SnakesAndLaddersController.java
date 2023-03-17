@@ -1,16 +1,21 @@
 package model;
 
+import java.util.Random;
+
 public class SnakesAndLaddersController {
 
     private Gameboard gameboard;
     private Ranking ranking;
+    private Random r;
 
     public SnakesAndLaddersController() {
         gameboard = new Gameboard();
         ranking = new Ranking();
+        r = new Random();
     }
 
-    public void createGameboard(int rows, int columns, int snakes, int ladders) {
+    public void createGameboard(int rows, int columns, int snakes, int ladders, String symbolPlayer1,
+            String symbolPlayer2, String symbolPlayer3) {
         // Para crear otro tablero, se regeneran nuevamente todos los valores de este
         gameboard.setHead(null);
         gameboard.setTail(null);
@@ -19,9 +24,9 @@ public class SnakesAndLaddersController {
         gameboard.setLadders(ladders);
         gameboard.setSnakes(snakes);
         createGameboard(rows, columns, 1);
-        gameboard.searchBox(1).setPlayer1(new Player("*"));
-        gameboard.searchBox(1).setPlayer2(new Player("$"));
-        gameboard.searchBox(1).setPlayer3(new Player("%"));
+        gameboard.searchBox(1).setPlayer1(new Player(symbolPlayer1));
+        gameboard.searchBox(1).setPlayer2(new Player(symbolPlayer2));
+        gameboard.searchBox(1).setPlayer3(new Player(symbolPlayer3));
         gameboard.createLadders();
         gameboard.createSnakes();
     }
@@ -52,5 +57,11 @@ public class SnakesAndLaddersController {
 
     public String printSnakeLadder(){
         return gameboard.printSnakeLadder();
+    }
+
+    public int throwDice() {
+        int result = r.nextInt(5) + 1;
+        return result;
+
     }
 }

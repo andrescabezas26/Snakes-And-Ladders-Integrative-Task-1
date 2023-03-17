@@ -10,8 +10,7 @@ public class Gameboard {
     private int ladders;
     private Box head;
     private Box tail;
-
-    public Random r;
+    private Random r;
 
     public Gameboard() {
         r = new Random();
