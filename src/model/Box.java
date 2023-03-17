@@ -21,7 +21,7 @@ public class Box {
         this.player3 = new Player("");
     }
 
-    private int verifyIfisLadderOrSnake(){
+    public int verifyIfisLadderOrSnake(){
         char[] value=snakeOrLadderValue.toCharArray();
         if(Character.isDigit(value[0])){
             return 1;
