@@ -136,6 +136,9 @@ public class Main {
 
         controller.createGameboard(rows, columns, snakes, ladders, symbolPlayer1, symbolPlayer2, symbolPlayer3);
 
+        controller.playGame(2, 1, symbolPlayer1);
+
+  
         testCase();
 
         System.out.println(controller.printGameboard());
@@ -150,6 +153,8 @@ public class Main {
         System.out.println(controller.printSnakeLadder());
 
     }
+    
+
 
     public void testCase() {
         System.out.println(controller.printGameboard());

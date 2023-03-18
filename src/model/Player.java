@@ -6,9 +6,12 @@ public class Player {
     private String name;
     private long score;
     private Player next;
+    private int actualBox;
+    
     
     public Player(String name) {
         this.name = name;
+        this.actualBox = 1;
     }
     public String getName() {
         return name;
@@ -28,4 +31,19 @@ public class Player {
     public void setNext(Player next) {
         this.next = next;
     }
+
+    /**
+     * @return int return the actualBox
+     */
+    public int getActualBox() {
+        return actualBox;
+    }
+
+    /**
+     * @param actualBox the actualBox to set
+     */
+    public void setActualBox(int actualBox) {
+        this.actualBox = actualBox;
+    }
+
 }

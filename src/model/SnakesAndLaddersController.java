@@ -31,6 +31,31 @@ public class SnakesAndLaddersController {
         gameboard.createSnakes();
     }
 
+    public String playGame(int numDice, int counter, String namePlayer) {
+        gameboard.searchBox(counter);
+        Player player = gameboard.searchPlayerBox(namePlayer, counter);
+        if (counter == 1) {
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName("");
+            player.setActualBox(player.getActualBox() + numDice);
+            gameboard.searchBox(player.getActualBox()).setPlayer1(player);
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName(namePlayer);
+
+        } else if (counter == 2) {
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName("");
+            player.setActualBox(player.getActualBox() + numDice);
+            gameboard.searchBox(player.getActualBox()).setPlayer1(player);
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName(namePlayer);
+        } else {
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName("");
+            player.setActualBox(player.getActualBox() + numDice);
+            gameboard.searchBox(player.getActualBox()).setPlayer1(player);
+            gameboard.searchBox(player.getActualBox()).getPlayer1().setName(namePlayer);
+        }
+
+        return "El jugador " + player.getName() + " ha jugado su turno" + "\n" + printGameboard();
+
+    }
+
     private void createGameboard(int rows, int columns, int counter) {
         Box newBox = new Box(counter);
 
@@ -55,7 +80,7 @@ public class SnakesAndLaddersController {
         }
     }
 
-    public String printSnakeLadder(){
+    public String printSnakeLadder() {
         return gameboard.printSnakeLadder();
     }
 

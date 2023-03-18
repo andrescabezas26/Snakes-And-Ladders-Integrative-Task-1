@@ -74,7 +74,7 @@ public class Gameboard {
     }
 
     private int vefiryBoxLaddersAndSnakes(Box box1, int random, int option) {
-        if (box1.getSnakeOrLadder()==null) {
+        if (box1.getSnakeOrLadder() == null) {
             return random;
         }
         if (option == 1) {
@@ -152,7 +152,7 @@ public class Gameboard {
         if (counter == 0) {
             return msj + tmpMsj;
         }
-        Boolean isEmpty = searchBox(counter).getSnakeOrLadder()==null;
+        Boolean isEmpty = searchBox(counter).getSnakeOrLadder() == null;
         String SnaAndLad = searchBox(counter).getSnakeOrLadderValue();
         // Si es par es de una forma
         if (row % 2 == 0) {
@@ -215,6 +215,66 @@ public class Gameboard {
         }
 
         return searchBox(goal, current.getNext());
+    }
+
+    // Trigger
+    public Player searchPlayerBox(String goal, int counter) {
+        return searchPlayerBox(goal, this.head, counter);
+    }
+
+    private Player searchPlayerBox(String goal, Box current, int counter) {
+        
+        // Caso base
+        if (current == null) {
+            return null;
+        }
+
+        if(counter == 1){
+            if (goal == head.getPlayer1().getName()) {
+                return this.head.getPlayer1();
+            }
+    
+            if (goal == tail.getPlayer1().getName()) {
+                return this.tail.getPlayer1();
+            }
+            if (goal == current.getPlayer1().getName()) {
+                return current.getPlayer1();
+            }
+    
+            return searchPlayerBox(goal, current.getNext(), counter);
+
+        }else if(counter == 2){
+            if (goal == head.getPlayer2().getName()) {
+                return this.head.getPlayer2();
+            }
+    
+            if (goal == tail.getPlayer1().getName()) {
+                return this.tail.getPlayer2();
+            }
+            if (goal == current.getPlayer2().getName()) {
+                return current.getPlayer2();
+            }
+    
+            return searchPlayerBox(goal, current.getNext(), counter);
+        }else{
+             if(counter == 3){
+                if (goal == head.getPlayer3().getName()) {
+                    return this.head.getPlayer3();
+                }
+        
+                if (goal == tail.getPlayer3().getName()) {
+                    return this.tail.getPlayer3();
+                }
+                if (goal == current.getPlayer3().getName()) {
+                    return current.getPlayer3();
+                }
+        
+                return searchPlayerBox(goal, current.getNext(), counter);
+        }
+
+    }
+     return null;
+        
     }
 
     // Trigger
