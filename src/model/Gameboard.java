@@ -46,24 +46,23 @@ public class Gameboard {
     }
 
     /**
-     * @param snake
+     * createSnakes: Create snakes for the game
+     * 
+     * @param snake int = The num of snakes that will be generated
      */
     private void createSnakes(int snake) {
         if (snake == 0) {
             return;
         }
-
-        int numBox1 = r.nextInt(((rows * colums) / 2 - 1)) + 2;
+        int numBox1 = r.nextInt(((rows * colums) - 2)) + 2;
         Box box1 = searchBox(numBox1);
-        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1, 1);
+        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1);
         int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
-
         searchBox(numBox1).setSnakeOrLadderValue(intToLetter(snake));
         searchBox(numBox1).setSnakeOrLadder(searchBox(numBox2));
         searchBox(numBox2).setSnakeOrLadderValue(intToLetter(snake));
         searchBox(numBox2).setSnakeOrLadder(searchBox(numBox1));
-        snake--;
-        createSnakes(snake);
+        createSnakes(--snake);
     }
 
     /**
@@ -74,65 +73,85 @@ public class Gameboard {
     }
 
     /**
-     * @param ladder
+     * createLadders: Create ladders for the game
+     * 
+     * @param ladder int = The num of ladder that will be generated
      */
     private void createLadders(int ladder) {
         if (ladder == 0) {
             return;
         }
-        int numBox1 = r.nextInt(((rows * colums) / 2 - 1)) + 2;
+        int numBox1 = r.nextInt(((rows * colums) - 2)) + 2;
         Box box1 = searchBox(numBox1);
-        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1, 1);
+        numBox1 = vefiryBoxLaddersAndSnakes(box1, numBox1);
         int numBox2 = vefirySecondRandomBox(numBox1, numBox1);
         searchBox(numBox1).setSnakeOrLadderValue(ladder + "");
         searchBox(numBox1).setSnakeOrLadder(searchBox(numBox2));
         searchBox(numBox2).setSnakeOrLadderValue(ladder + "");
         searchBox(numBox2).setSnakeOrLadder(searchBox(numBox1));
-        ladder--;
-        createLadders(ladder);
+        createLadders(--ladder);
     }
 
     /**
-     * @param box1
-     * @param random
-     * @param option
-     * @return
+     * vefiryBoxLaddersAndSnakes: Verify if the snakeOrLadder is empty in the box
+     * and return the value of the box, else generate
+     * another random and call the method again.
+     * 
+     * @param box1   : Box = The box that will be verified
+     * @param random : int = The num of the box the box that will be verified
+     * @return int = The value of the box that is empty
      */
-    private int vefiryBoxLaddersAndSnakes(Box box1, int random, int option) {
+    private int vefiryBoxLaddersAndSnakes(Box box1, int random) {
         if (box1.getSnakeOrLadder() == null) {
             return random;
         }
-        if (option == 1) {
-            random = r.nextInt(((rows * colums) / 2 - 1)) + 2;
-        }
         random = r.nextInt(((rows * colums) - 2)) + 2;
         box1 = searchBox(random);
-        return vefiryBoxLaddersAndSnakes(box1, random, option);
+        return vefiryBoxLaddersAndSnakes(box1, random);
     }
 
     /**
-     * @param random
-     * @param higher
-     * @return
+     * verifySecondRandomBox: This method verify that the second box generated is
+     * empty and his row is different to the box1, finally verify if is empty too
+     * then return the value of the box, else generate another value and call the
+     * same method
+     * 
+     * @param random        : int = The value of the ner box that will be verified
+     * @param firstBoxValue : int = The value of the first box
+     * @return int = The value of the box that is empty
      */
-    private int vefirySecondRandomBox(int random, int higher) {
-        if (random > higher + colums) {
+    private int vefirySecondRandomBox(int random, int firstBoxValue) {
+        if (getRow(random) != getRow(firstBoxValue) && random != firstBoxValue) {
             Box box = searchBox(random);
-            if (vefiryBoxLaddersAndSnakes(box, random, 2) == random) {
+            if (vefiryBoxLaddersAndSnakes(box, random) == random) {
                 return random;
             } else {
                 random = r.nextInt((rows * colums) - 2) + 2;
-                return vefirySecondRandomBox(random, higher);
+                return vefirySecondRandomBox(random, firstBoxValue);
             }
         } else {
             random = r.nextInt(((rows * colums) - 2)) + 2;
-            return vefirySecondRandomBox(random, higher);
+            return vefirySecondRandomBox(random, firstBoxValue);
         }
     }
 
     /**
-     * @param num
-     * @return
+     * getRow: Get the row of the box
+     * 
+     * @param num : int = The value of the box
+     * @return : int = The row of the box
+     */
+    private int getRow(int num) {
+        double num1 = (double) num;
+        double columns1 = (double) colums;
+        return (int) Math.ceil(num1 / columns1);
+    }
+
+    /**
+     * intToLetter: Uses the ASCII code to get the value of a num in the alphabet
+     * 
+     * @param num : The num that will be converted
+     * @return String = The letter of the alphabet
      */
     private String intToLetter(int num) {
         char letter = (char) (64 + num);
