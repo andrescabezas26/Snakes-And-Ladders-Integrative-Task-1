@@ -1,3 +1,7 @@
+/**
+ * This class is the gameboard, it has the methods to create the gameboard, the snakes and the ladders,
+ * it also has the methods to print the gameboard and the snakes and ladders
+ */
 package model;
 
 import java.util.Random;
@@ -16,6 +20,9 @@ public class Gameboard {
         r = new Random();
     }
 
+    /**
+     * @param node
+     */
     public void addLast(Box node) {
         if (this.head == null) {
             this.tail = node;
@@ -31,10 +38,16 @@ public class Gameboard {
         }
     }
 
+    /**
+     * create the snakes
+     */
     public void createSnakes() {
         createSnakes(snakes);
     }
 
+    /**
+     * @param snake
+     */
     private void createSnakes(int snake) {
         if (snake == 0) {
             return;
@@ -53,10 +66,16 @@ public class Gameboard {
         createSnakes(snake);
     }
 
+    /**
+     * 
+     */
     public void createLadders() {
         createLadders(ladders);
     }
 
+    /**
+     * @param ladder
+     */
     private void createLadders(int ladder) {
         if (ladder == 0) {
             return;
@@ -73,6 +92,12 @@ public class Gameboard {
         createLadders(ladder);
     }
 
+    /**
+     * @param box1
+     * @param random
+     * @param option
+     * @return
+     */
     private int vefiryBoxLaddersAndSnakes(Box box1, int random, int option) {
         if (box1.getSnakeOrLadder() == null) {
             return random;
@@ -85,6 +110,11 @@ public class Gameboard {
         return vefiryBoxLaddersAndSnakes(box1, random, option);
     }
 
+    /**
+     * @param random
+     * @param higher
+     * @return
+     */
     private int vefirySecondRandomBox(int random, int higher) {
         if (random > higher + colums) {
             Box box = searchBox(random);
@@ -100,15 +130,30 @@ public class Gameboard {
         }
     }
 
+    /**
+     * @param num
+     * @return
+     */
     private String intToLetter(int num) {
         char letter = (char) (64 + num);
         return letter + "";
     }
 
+    /**
+     * @return
+     */
     public String printGameboard() {
         return "\n" + printGameboard(colums, rows, colums * rows, "", "");
     }
 
+    /**
+     * @param column
+     * @param row
+     * @param counter
+     * @param tmpMsj
+     * @param msj
+     * @return
+     */
     private String printGameboard(int column, int row, int counter, String tmpMsj, String msj) {
         // Se ejecutara hasta que el counter sea 0
         if (counter == 0) {
@@ -143,10 +188,21 @@ public class Gameboard {
 
     }
 
+    /**
+     * @return
+     */
     public String printSnakeLadder() {
         return "\n" + printSnakeLadder(colums, rows, colums * rows, "", "");
     }
 
+    /**
+     * @param column
+     * @param row
+     * @param counter
+     * @param tmpMsj
+     * @param msj
+     * @return
+     */
     private String printSnakeLadder(int column, int row, int counter, String tmpMsj, String msj) {
         // Se ejecutara hasta que el counter sea 0
         if (counter == 0) {
@@ -196,6 +252,11 @@ public class Gameboard {
 
     }
 
+    /**
+     * @param goal
+     * @param current
+     * @return
+     */
     private Box searchBox(int goal, Box current) {
         // Caso base
         if (current == null) {
@@ -214,70 +275,97 @@ public class Gameboard {
             return current;
         }
 
+        if (current == this.tail && goal != this.tail.getValue()) {
+            return null;
+        }
+
         return searchBox(goal, current.getNext());
     }
 
-    // Trigger
+    /**
+     * @param goal
+     * @param counter
+     * @return
+     */
     public Player searchPlayerBox(String goal, int counter) {
         return searchPlayerBox(goal, this.head, counter);
     }
 
+    /**
+     * @param goal
+     * @param current
+     * @param counter
+     * @return
+     */
     private Player searchPlayerBox(String goal, Box current, int counter) {
-        
+
         // Caso base
         if (current == null) {
             return null;
         }
 
-        if(counter == 1){
-            if (goal == head.getPlayer1().getName()) {
+        if (counter == 1) {
+
+            if (goal == head.getPlayer1().getName() && current.equals(this.head)) {
                 return this.head.getPlayer1();
             }
-    
-            if (goal == tail.getPlayer1().getName()) {
+
+            if (goal == tail.getPlayer1().getName() && current.equals(this.tail)) {
                 return this.tail.getPlayer1();
             }
             if (goal == current.getPlayer1().getName()) {
                 return current.getPlayer1();
             }
-    
+
+            if (current == this.tail && goal != this.tail.getPlayer1().getName()) {
+                return null;
+            }
+
             return searchPlayerBox(goal, current.getNext(), counter);
 
-        }else if(counter == 2){
-            if (goal == head.getPlayer2().getName()) {
+        } else if (counter == 2) {
+            if (goal == head.getPlayer2().getName() && current.equals(this.head)) {
                 return this.head.getPlayer2();
             }
-    
-            if (goal == tail.getPlayer1().getName()) {
+
+            if (goal == tail.getPlayer2().getName() && current.equals(this.tail)) {
                 return this.tail.getPlayer2();
             }
             if (goal == current.getPlayer2().getName()) {
                 return current.getPlayer2();
             }
-    
+
+            if (current == this.tail && goal != this.tail.getPlayer2().getName()) {
+                return null;
+            }
+
             return searchPlayerBox(goal, current.getNext(), counter);
-        }else{
-             if(counter == 3){
-                if (goal == head.getPlayer3().getName()) {
-                    return this.head.getPlayer3();
-                }
-        
-                if (goal == tail.getPlayer3().getName()) {
-                    return this.tail.getPlayer3();
-                }
-                if (goal == current.getPlayer3().getName()) {
-                    return current.getPlayer3();
-                }
-        
-                return searchPlayerBox(goal, current.getNext(), counter);
+
+        } else {
+            if (goal == head.getPlayer3().getName() && current.equals(this.head)) {
+                return this.head.getPlayer3();
+            }
+
+            if (goal == tail.getPlayer3().getName() && current.equals(this.tail)) {
+                return this.tail.getPlayer3();
+            }
+            if (goal == current.getPlayer3().getName()) {
+                return current.getPlayer3();
+            }
+
+            if (current == this.tail && goal != this.tail.getPlayer3().getName()) {
+                return null;
+            }
+
+            return searchPlayerBox(goal, current.getNext(), counter);
         }
 
     }
-     return null;
-        
-    }
 
-    // Trigger
+    /**
+     * @param goal
+     * @return
+     */
     public Box searchBox(int goal) {
         return searchBox(goal, this.head);
     }

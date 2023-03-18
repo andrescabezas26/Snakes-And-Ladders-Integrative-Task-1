@@ -1,3 +1,6 @@
+/**
+ * It's a class that represents a box in a board game
+ */
 package model;
 
 public class Box {
@@ -15,32 +18,50 @@ public class Box {
         this.value = value;
         this.next = null;
         this.previous = null;
-        this.snakeOrLadderValue="";
+        this.snakeOrLadderValue = "";
         this.player1 = new Player("");
         this.player2 = new Player("");
         this.player3 = new Player("");
     }
 
-    public int verifyIfisLadderOrSnake(){
-        char[] value=snakeOrLadderValue.toCharArray();
-        if(Character.isDigit(value[0])){
+    /**
+     * It checks if is a ladder. If it is, it returns 1. Otherwise, it
+     * returns -1 if is a snake
+     * 
+     * @return 1 or -1
+     */
+    public int verifyIfIsLadderOrSnake() {
+        char[] value = snakeOrLadderValue.toCharArray();
+        if (Character.isDigit(value[0])) {
             return 1;
         }
         return -1;
     }
 
+    /**
+     * @return
+     */
     public Box getNext() {
         return next;
     }
 
+    /**
+     * @param next
+     */
     public void setNext(Box next) {
         this.next = next;
     }
 
+    /**
+     * @return
+     */
     public int getValue() {
         return value;
     }
 
+    /**
+     * @param value
+     */
     public void setValue(int value) {
         this.value = value;
     }

@@ -1,9 +1,15 @@
+/**
+ * The class Ranking is a binary search tree that stores Score objects.
+ */
 package model;
 
 public class Ranking {
 
     private Score root;
 
+    /**
+     * @param score
+     */
     public void insertScore(Score score){
         if(root==null){
             root=score;
@@ -12,6 +18,10 @@ public class Ranking {
         }
     }
 
+    /**
+     * @param score
+     * @param current
+     */
     private void insertScore(Score score, Score current){
 		
 		if(score.getValue() < current.getValue()){
@@ -36,10 +46,18 @@ public class Ranking {
 		}
 	}
 
+    /**
+     * @return
+     */
     public String printInDescendingOrder(){
 		return "[" + printInDescendingOrder(root) + "]"; 
 	}
 
+	
+	/**
+	 * @param current
+	 * @return
+	 */
 	private String printInDescendingOrder(Score current){
 		if(current == null){
 			return ""; 

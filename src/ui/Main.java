@@ -1,15 +1,21 @@
+/**
+ * Main: The main class
+ */
 package ui;
 
 import java.util.Scanner;
 import model.SnakesAndLaddersController;
-import java.util.InputMismatchException;
 
 public class Main {
 
     public Scanner reader;
     public SnakesAndLaddersController controller;
 
-    public static void main(String[] args) {
+    /**
+     * @param args
+     * @throws CloneNotSupportedException
+     */
+    public static void main(String[] args) throws CloneNotSupportedException {
 
         Main SnakesAndLadders = new Main();
         SnakesAndLadders.hello();
@@ -38,46 +44,49 @@ public class Main {
 
     /**
      * Description: Allows select the option of the main menu
+     * 
+     * @throws CloneNotSupportedException
      */
-    public void mainMenu() {
+    public void mainMenu() throws CloneNotSupportedException {
 
         int optionMenu = 0;
         boolean exit = false;
         do {
-            try {
-                System.out.println(
-                        "\n----------\nMain Menu\n---------- Choose a option:\n 0) Exit of program\n 1) Play"
-                                + "\n 2) See Rankig"
-                                + "\n-------------------");
-                optionMenu = reader.nextInt();
+            System.out.println(
+                    "\n----------\nMain Menu\n---------- Choose a option:\n 0) Exit of program\n 1) Play"
+                            + "\n 2) See Rankig"
+                            + "\n-------------------");
+            optionMenu = validateIntegerOption();
 
-                switch (optionMenu) {
-                    case 0:
-                        exit = true;
-                        break;
-                    case 1:
-                        play();
-                        break;
-                    case 2:
-                        System.out.println(seeRanking());
-                        break;
-                    default:
-                        System.out.println("------------------\nValue incorrect!");
-                        break;
-                }
-            } catch (Exception InputMismatchException) {
-                System.out.println("Write a valid option!");
-                reader.next();
+            switch (optionMenu) {
+                case 0:
+                    exit = true;
+                    break;
+                case 1:
+                    play();
+                    break;
+                case 2:
+                    System.out.println(seeRanking());
+                    break;
+                default:
+                    System.out.println("------------------\nValue incorrect!");
+                    break;
             }
 
         } while (exit == false);
     }
 
+    /**
+     * @return
+     */
     private String seeRanking() {
         return controller.printRanking();
     }
 
-    private void play() {
+    /**
+     * @throws CloneNotSupportedException
+     */
+    private void play() throws CloneNotSupportedException {
         System.out.println("Enter the number of rows (horizontally)");
         int rows = validateIntegerOption();
         while (rows == -1 || rows <= 0) {
@@ -135,27 +144,52 @@ public class Main {
         }
 
         controller.createGameboard(rows, columns, snakes, ladders, symbolPlayer1, symbolPlayer2, symbolPlayer3);
-
-        controller.playGame(2, 1, symbolPlayer1);
-
-  
-        testCase();
-
-        System.out.println(controller.printGameboard());
         long startTime = System.currentTimeMillis();
-        reader.nextInt();
+        System.out.println("The gameboard is: ");
+        System.out.println(controller.printGameboard());
+        System.out.println("\n");
+
+        int counter = 1;
+        boolean hasWon = false;
+
+        while (counter <= 3 && hasWon == false ) {
+            if(counter == 1){
+                int numDice = playMenu(symbolPlayer1);
+                System.out.println("The player " +symbolPlayer1+ " has rolled " + numDice + " on the dice");
+                System.out.println(controller.playGame(numDice, counter, symbolPlayer1));
+                counter++;
+                hasWon = controller.verifyIsHasWin();
+
+            }else if(counter == 2){
+                int numDice = playMenu(symbolPlayer2);
+                System.out.println("The player " + symbolPlayer2 + " has rolled " + numDice + " on the dice");
+                System.out.println(controller.playGame(numDice, counter, symbolPlayer2));
+                counter++;
+                hasWon = controller.verifyIsHasWin();
+
+            }else{
+                int numDice = playMenu(symbolPlayer3);
+                System.out.println("The player " + symbolPlayer3 + " has rolled " + numDice + " on the dice");
+                System.out.println(controller.playGame(numDice, counter, symbolPlayer3));
+                counter = 1;
+                hasWon = controller.verifyIsHasWin();
+            }
+
+        }
+        System.out.println(controller.messageOfWin());
+        
         long endTime = System.currentTimeMillis();
 
         long totalTime = (endTime - startTime) / 1000;
 
         System.out.println("The total time is: " + totalTime + " seconds");
 
-        System.out.println(controller.printSnakeLadder());
 
     }
-    
 
-
+    /**
+     * 
+     */
     public void testCase() {
         System.out.println(controller.printGameboard());
 
@@ -183,73 +217,106 @@ public class Main {
         return option;
     }
 
+    /**
+     * A method that allows the user choose the option to play
+     */
+    private int playMenu(String symbolPlayer) {
+        int optionMenuPlayer = 0;
+        boolean exit = false;
+        int dice = 0;
+        do {
+            System.out.println(
+                    "Player " + symbolPlayer + " is your turn:" +
+                            "\nChoose a option: \n 1) Throw dice"
+                            + "\n 2) See snakes and ladders"
+                            + "\n-------------------");
+            optionMenuPlayer = validateIntegerOption();
+
+            switch (optionMenuPlayer) {
+
+                case 1:
+                    dice = controller.throwDice();
+                    exit = true;
+                    break;
+                case 2:
+                    System.out.println(controller.printSnakeLadder());
+                    break;
+                default:
+                    System.out.println("------------------\nValue incorrect!");
+                    break;
+            }
+        } while (exit == false);
+
+        return dice;
+    }
+
+    /**
+     * A method that allows the user to choose a symbol for the player.
+     */
     private String chooseSymbolPlayer() {
-        int optionMenu = 0;
+        int optionMenuPlayer = 0;
         boolean exit = false;
         String symbol = "";
         do {
-            try {
-                System.out.println(
-                        "Symbols players " +
-                                "\nChoose a option: \n 1) *"
-                                + "\n 2) !"
-                                + "\n 3) O"
-                                + "\n 4) X"
-                                + "\n 5) %"
-                                + "\n 6) $"
-                                + "\n 7) #"
-                                + "\n 8) +"
-                                + "\n 9) &"
-                                + "\n-------------------");
-                optionMenu = reader.nextInt();
+            System.out.println(
+                    "Symbols players " +
+                            "\nChoose a option: \n 1) *"
+                            + "\n 2) !"
+                            + "\n 3) O"
+                            + "\n 4) X"
+                            + "\n 5) %"
+                            + "\n 6) $"
+                            + "\n 7) #"
+                            + "\n 8) +"
+                            + "\n 9) &"
+                            + "\n-------------------");
+            optionMenuPlayer = validateIntegerOption();
+          
 
-                switch (optionMenu) {
+            switch (optionMenuPlayer) {
 
-                    case 1:
-                        symbol = "*";
-                        exit = true;
-                        break;
-                    case 2:
-                        symbol = "!";
-                        exit = true;
-                        break;
-                    case 3:
-                        symbol = "O";
-                        exit = true;
-                        break;
-                    case 4:
-                        symbol = "X";
-                        exit = true;
-                        break;
-                    case 5:
-                        symbol = "%";
-                        exit = true;
-                        break;
-                    case 6:
-                        symbol = "$";
-                        exit = true;
-                        break;
-                    case 7:
-                        symbol = "#";
-                        exit = true;
-                        break;
-                    case 8:
-                        symbol = "+";
-                        exit = true;
-                        break;
-                    case 9:
-                        symbol = "&";
-                        exit = true;
-                        break;
+                case 1:
+                    symbol = "*";
+                    exit = true;
+                    break;
+                case 2:
+                    symbol = "!";
+                    exit = true;
+                    break;
+                case 3:
+                    symbol = "O";
+                    exit = true;
+                    break;
+                case 4:
+                    symbol = "X";
+                    exit = true;
+                    break;
+                case 5:
+                    symbol = "%";
+                    exit = true;
+                    break;
+                case 6:
+                    symbol = "$";
+                    exit = true;
+                    break;
+                case 7:
+                    symbol = "#";
+                    exit = true;
+                    break;
+                case 8:
+                    symbol = "+";
+                    exit = true;
+                    break;
+                case 9:
+                    symbol = "&";
+                    exit = true;
+                    break;
 
-                    default:
-                        System.out.println("------------------\nValue incorrect!");
-                        break;
-                }
-            } catch (Exception InputMismatchException) {
-                System.out.println("Write a valid option!");
-                reader.next();
+                default:
+                    System.out.println("------------------\nValue incorrect!");
+                    break;
             }
+
         } while (exit == false);
 
         return symbol;

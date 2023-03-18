@@ -1,3 +1,6 @@
+/**
+ * Score is a class that represents a score of a player in a game.
+ */
 package model;
 
 public class Score {
