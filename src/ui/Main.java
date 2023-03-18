@@ -152,22 +152,22 @@ public class Main {
         int counter = 1;
         boolean hasWon = false;
 
-        while (counter <= 3 && hasWon == false ) {
-            if(counter == 1){
+        while (counter <= 3 && hasWon == false) {
+            if (counter == 1) {
                 int numDice = playMenu(symbolPlayer1);
-                System.out.println("The player " +symbolPlayer1+ " has rolled " + numDice + " on the dice");
+                System.out.println("The player " + symbolPlayer1 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer1));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
 
-            }else if(counter == 2){
+            } else if (counter == 2) {
                 int numDice = playMenu(symbolPlayer2);
                 System.out.println("The player " + symbolPlayer2 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer2));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
 
-            }else{
+            } else {
                 int numDice = playMenu(symbolPlayer3);
                 System.out.println("The player " + symbolPlayer3 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer3));
@@ -177,25 +177,15 @@ public class Main {
 
         }
         System.out.println(controller.messageOfWin());
-        
+
         long endTime = System.currentTimeMillis();
 
         long totalTime = (endTime - startTime) / 1000;
+        long scorePlayer = (600 - totalTime) / 6;
 
         System.out.println("The total time is: " + totalTime + " seconds");
+        System.out.println("El puntaje del jugador es: " + scorePlayer);
 
-
-    }
-
-    /**
-     * 
-     */
-    public void testCase() {
-        System.out.println(controller.printGameboard());
-
-        System.out.println(controller.printSnakeLadder());
-
-        reader.nextInt();
     }
 
     /**
@@ -271,7 +261,6 @@ public class Main {
                             + "\n 9) &"
                             + "\n-------------------");
             optionMenuPlayer = validateIntegerOption();
-          
 
             switch (optionMenuPlayer) {
 
