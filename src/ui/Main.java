@@ -184,7 +184,9 @@ public class Main {
         long scorePlayer = (600 - totalTime) / 6;
 
         System.out.println("The total time is: " + totalTime + " seconds");
-        System.out.println("El puntaje del jugador es: " + scorePlayer);
+        System.out.println("The score of the player is: " + scorePlayer);
+        System.out.println("Write your name");
+        String nameWinnerPlayer = reader.nextLine();
 
     }
 
