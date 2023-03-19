@@ -122,10 +122,11 @@ public class Main {
             ladders = validateIntegerOption();
         }
 
-        while (ladders + snakes > Math.floor(((rows * columns)-4 )/2)) {
+        while (ladders + snakes > Math.floor(((rows * columns) - 4) / 2)) {
             System.out
-                    .println("The number of ladders and snakes can not be more than " + Math.floor(((rows * columns)-4 )/2));
-            
+                    .println("The number of ladders and snakes can not be more than "
+                            + Math.floor(((rows * columns) - 4) / 2));
+
             System.out.println("Enter the number of snakes");
             snakes = validateIntegerOption();
             while (snakes == -1 || snakes < 0) {
@@ -176,10 +177,8 @@ public class Main {
 
         while (counter <= 3 && hasWon == false) {
             if (counter == 1) {
-        while (counter <= 3 && hasWon == false) {
-            if (counter == 1) {
                 int numDice = playMenu(symbolPlayer1);
-                System.out.println("The player " +  symbolPlayer1  + " has rolled " + numDice + " on the dice");
+                System.out.println("The player " + symbolPlayer1 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer1));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
@@ -209,13 +208,11 @@ public class Main {
 
         System.out.println("The total time is: " + totalTime + " seconds");
         System.out.println("The score of the player is: " + scorePlayer);
-        System.out.println("Write your name");
-        String nameWinnerPlayer = reader.nextLine();
         System.out.println("Writte the name of the winner example: AND");
-        String winner= reader.next();
-        while(winner.toCharArray().length>3){
+        String winner = reader.next();
+        while (winner.toCharArray().length > 3) {
             System.out.println("Maximum character limit: 3");
-            winner= reader.next();
+            winner = reader.next();
         }
         controller.addScore(winner, totalTime);
 
