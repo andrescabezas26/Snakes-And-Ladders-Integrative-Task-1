@@ -27,15 +27,55 @@ public class Box {
     /**
      * It checks if is a ladder. If it is, it returns 1. Otherwise, it
      * returns -1 if is a snake
+     * returns 0 if is a normal box
      * 
      * @return 1 or -1
      */
     public int verifyIfIsLadderOrSnake() {
+        if(snakeOrLadderValue.isEmpty()){
+            return 0;
+        }
         char[] value = snakeOrLadderValue.toCharArray();
         if (Character.isDigit(value[0])) {
             return 1;
         }
         return -1;
+    }
+
+
+    /**
+     * // 
+     * public boolean conditionLadder(){
+     *         return snakeOrLadder.getValue() > this.value;
+     *      
+     *     }
+     * 
+     * @return The method is returning a boolean value.
+     */
+    public boolean conditionLadder(){
+        if(snakeOrLadder.getValue() > this.value){
+            return true;
+        }else{
+            return false;
+        }
+     
+    }
+
+    /**
+     * //
+     * public boolean conditionSnake() {
+     *         return snakeOrLadder.getValue() < this.value;
+     *     }
+     * 
+     * @return The method is returning a boolean value.
+     */
+    public boolean conditionSnake() {
+        if (snakeOrLadder.getValue() < this.value) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**

@@ -176,8 +176,10 @@ public class Main {
 
         while (counter <= 3 && hasWon == false) {
             if (counter == 1) {
+        while (counter <= 3 && hasWon == false) {
+            if (counter == 1) {
                 int numDice = playMenu(symbolPlayer1);
-                System.out.println("The player " + symbolPlayer1 + " has rolled " + numDice + " on the dice");
+                System.out.println("The player " +  symbolPlayer1  + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer1));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
@@ -203,9 +205,12 @@ public class Main {
         long endTime = System.currentTimeMillis();
 
         long totalTime = (endTime - startTime) / 1000;
+        long scorePlayer = (600 - totalTime) / 6;
 
         System.out.println("The total time is: " + totalTime + " seconds");
-
+        System.out.println("The score of the player is: " + scorePlayer);
+        System.out.println("Write your name");
+        String nameWinnerPlayer = reader.nextLine();
         System.out.println("Writte the name of the winner example: AND");
         String winner= reader.next();
         while(winner.toCharArray().length>3){
@@ -214,17 +219,6 @@ public class Main {
         }
         controller.addScore(winner, totalTime);
 
-    }
-
-    /**
-     * 
-     */
-    public void testCase() {
-        System.out.println(controller.printGameboard());
-
-        System.out.println(controller.printSnakeLadder());
-
-        reader.nextInt();
     }
 
     /**

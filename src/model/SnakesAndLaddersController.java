@@ -76,25 +76,96 @@ public class SnakesAndLaddersController {
             copyPlayer.setActualBox(copyPlayer.getActualBox() + numDice);
             gameboard.searchBox(copyPlayer.getActualBox()).setPlayer1(copyPlayer);
             gameboard.searchBox(previousBox).getPlayer1().setName("");
+            previousBox = copyPlayer.getActualBox();
+            copyPlayer.setName(namePlayer);
+
+            if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == 1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionLadder()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer1(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer1().setName("");
+
+                }
+
+            } else if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == -1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionSnake()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer1(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer1().setName("");
+
+                }
+            }
 
         } else if (counter == 2) {
             if (verifyCanWin(copyPlayer)) {
                 if (numDice > sizeGameboard - copyPlayer.getActualBox()) {
-                    return "The player has to throw the dice with the exact num for win";
+                    return "The player has to throw the dice with the exact number for win";
                 }
             }
+
             copyPlayer.setActualBox(copyPlayer.getActualBox() + numDice);
             gameboard.searchBox(copyPlayer.getActualBox()).setPlayer2(copyPlayer);
             gameboard.searchBox(previousBox).getPlayer2().setName("");
+            previousBox = copyPlayer.getActualBox();
+            copyPlayer.setName(namePlayer);
+
+            if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == 1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionLadder()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer2(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer2().setName("");
+
+                }
+
+            } else if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == -1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionSnake()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer2(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer2().setName("");
+
+                }
+            }
         } else {
             if (verifyCanWin(copyPlayer)) {
                 if (numDice > sizeGameboard - copyPlayer.getActualBox()) {
-                    return "The player has to throw the dice with the exact num for win";
+                    return "The player has to throw the dice with the exact number for win";
                 }
             }
+
             copyPlayer.setActualBox(copyPlayer.getActualBox() + numDice);
             gameboard.searchBox(copyPlayer.getActualBox()).setPlayer3(copyPlayer);
             gameboard.searchBox(previousBox).getPlayer3().setName("");
+            previousBox = copyPlayer.getActualBox();
+            copyPlayer.setName(namePlayer);
+
+            if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == 1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionLadder()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer3(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer3().setName("");
+
+                }
+
+            } else if (gameboard.searchBox(copyPlayer.getActualBox()).verifyIfIsLadderOrSnake() == -1) {
+                if (gameboard.searchBox(copyPlayer.getActualBox()).conditionSnake()) {
+                    Player copyPlayerForLadderOrSnake = (Player) copyPlayer.clone();
+                    int ladderValue = gameboard.searchBox(copyPlayer.getActualBox()).getSnakeOrLadder().getValue();
+                    copyPlayerForLadderOrSnake.setActualBox(ladderValue);
+                    gameboard.searchBox(ladderValue).setPlayer3(copyPlayerForLadderOrSnake);
+                    gameboard.searchBox(previousBox).getPlayer3().setName("");
+
+                }
+            }
         }
         
         return "The player " + namePlayer + " has played his turn" + "\n" + printGameboard() + "\n";
