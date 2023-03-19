@@ -96,9 +96,14 @@ public class SnakesAndLaddersController {
             gameboard.searchBox(copyPlayer.getActualBox()).setPlayer3(copyPlayer);
             gameboard.searchBox(previousBox).getPlayer3().setName("");
         }
-
+        
         return "The player " + namePlayer + " has played his turn" + "\n" + printGameboard() + "\n";
 
+    }
+
+    public void addScore(String player, long time){
+        long score = (long) (600 - time) / 6;
+        ranking.insertScore(new Score(player, score));
     }
 
     /**
@@ -184,10 +189,11 @@ public class SnakesAndLaddersController {
      * Trigger of the method printInDescendingOrder
      */
     public String printRanking() {
-        if (ranking.printInDescendingOrder().equals("[]")) {
+        if (ranking.printInDescendingOrder().isEmpty()) {
             return "El ranking esta vacio";
         } else {
-            return ranking.printInDescendingOrder();
+
+            return "Name:\tScore\n"+ranking.printInDescendingOrder();
         }
     }
 

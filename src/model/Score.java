@@ -71,5 +71,9 @@ public class Score {
     public void setLeft(Score left) {
         this.left = left;
     }
+    @Override
+    public String toString(){
+        return namePlayer+"\t" + value;
+    }
 
 }

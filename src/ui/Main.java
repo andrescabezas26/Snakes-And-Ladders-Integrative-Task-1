@@ -89,18 +89,18 @@ public class Main {
     private void play() throws CloneNotSupportedException {
         System.out.println("Enter the number of rows (horizontally)");
         int rows = validateIntegerOption();
-        while (rows == -1 || rows <= 0) {
+        while (rows == -1 || rows <= 1) {
             reader.next();
             System.out.println(
-                    "This section does not accept letters, decimals, negative numbers or the value 0. Write a valid data");
+                    "This section does not accept letters, decimals, negative numbers or the value 1. Write a valid data");
             rows = validateIntegerOption();
         }
         System.out.println("Enter the number of columns (vertically)");
         int columns = validateIntegerOption();
-        while (columns == -1 || columns <= 0) {
+        while (columns == -1 || columns <= 1) {
             reader.next();
             System.out.println(
-                    "This section does not accept letters, decimals, negative numbers or the value 0. Write a valid data");
+                    "This section does not accept letters, decimals, negative numbers or the value 1. Write a valid data");
             columns = validateIntegerOption();
         }
 
@@ -120,6 +120,28 @@ public class Main {
             System.out.println(
                     "This section does not accept letters, decimals, negative numbers. Write a valid data");
             ladders = validateIntegerOption();
+        }
+
+        while (ladders + snakes > Math.floor(((rows * columns)-4 )/2)) {
+            System.out
+                    .println("The number of ladders and snakes can not be more than " + Math.floor(((rows * columns)-4 )/2));
+            
+            System.out.println("Enter the number of snakes");
+            snakes = validateIntegerOption();
+            while (snakes == -1 || snakes < 0) {
+                reader.next();
+                System.out.println(
+                        "This section does not accept letters, decimals, negative numbers. Write a valid data");
+                snakes = validateIntegerOption();
+            }
+            System.out.println("Enter the number of ladders");
+            ladders = validateIntegerOption();
+            while (ladders == -1 || ladders < 0) {
+                reader.next();
+                System.out.println(
+                        "This section does not accept letters, decimals, negative numbers. Write a valid data");
+                ladders = validateIntegerOption();
+            }
         }
 
         System.out.println("Choose the symbol of the player 1");
@@ -152,22 +174,22 @@ public class Main {
         int counter = 1;
         boolean hasWon = false;
 
-        while (counter <= 3 && hasWon == false ) {
-            if(counter == 1){
+        while (counter <= 3 && hasWon == false) {
+            if (counter == 1) {
                 int numDice = playMenu(symbolPlayer1);
-                System.out.println("The player " +symbolPlayer1+ " has rolled " + numDice + " on the dice");
+                System.out.println("The player " + symbolPlayer1 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer1));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
 
-            }else if(counter == 2){
+            } else if (counter == 2) {
                 int numDice = playMenu(symbolPlayer2);
                 System.out.println("The player " + symbolPlayer2 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer2));
                 counter++;
                 hasWon = controller.verifyIsHasWin();
 
-            }else{
+            } else {
                 int numDice = playMenu(symbolPlayer3);
                 System.out.println("The player " + symbolPlayer3 + " has rolled " + numDice + " on the dice");
                 System.out.println(controller.playGame(numDice, counter, symbolPlayer3));
@@ -177,13 +199,20 @@ public class Main {
 
         }
         System.out.println(controller.messageOfWin());
-        
+
         long endTime = System.currentTimeMillis();
 
         long totalTime = (endTime - startTime) / 1000;
 
         System.out.println("The total time is: " + totalTime + " seconds");
 
+        System.out.println("Writte the name of the winner example: AND");
+        String winner= reader.next();
+        while(winner.toCharArray().length>3){
+            System.out.println("Maximum character limit: 3");
+            winner= reader.next();
+        }
+        controller.addScore(winner, totalTime);
 
     }
 
@@ -271,7 +300,6 @@ public class Main {
                             + "\n 9) &"
                             + "\n-------------------");
             optionMenuPlayer = validateIntegerOption();
-          
 
             switch (optionMenuPlayer) {
 

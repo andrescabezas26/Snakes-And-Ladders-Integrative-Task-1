@@ -50,7 +50,7 @@ public class Ranking {
      * @return
      */
     public String printInDescendingOrder(){
-		return "[" + printInDescendingOrder(root) + "]"; 
+		return printInDescendingOrder(root); 
 	}
 
 	
@@ -63,6 +63,6 @@ public class Ranking {
 			return ""; 
 		}
 
-		return printInDescendingOrder(current.getLeft()) + " " + current.getValue() + " " + printInDescendingOrder(current.getRight()); 
+		return printInDescendingOrder(current.getRight()) + "" + current.toString() + "\n" + printInDescendingOrder(current.getLeft()); 
 	}
 }
